@@ -9,8 +9,6 @@ def home(request):
     return render(request,"home.html")
 
 
-def admin_dashboard(request):
-   return render(request,"admin_dashboard.html")
 
 
 def admin_logout(request):
@@ -33,6 +31,10 @@ def admin_login(request):
                     return redirect("admin_dashboard")
        
     return render(request,"admin_login.html")
+
+def admin_dashboard(request):
+   return render(request,"dashboard.html")
+
 
 
 def admin_signup(request):
