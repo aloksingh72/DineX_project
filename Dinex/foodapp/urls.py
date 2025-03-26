@@ -9,4 +9,6 @@ urlpatterns = [
     path("admin-dashboard/", admin_dashboard, name="admin_dashboard"),
     path('user-login/',user_login,name = "user_login"),
     # userdsignup path---->
+    path('categories/',categories_list,name = "categories"),
+    path('create-categories/',create_categories,name="create_categories")
 ]

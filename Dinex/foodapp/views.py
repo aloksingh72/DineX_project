@@ -33,9 +33,22 @@ def admin_login(request):
     return render(request,"admin_login.html")
 
 def admin_dashboard(request):
-   return render(request,"dashboard.html")
+   return render(request,"index.html")
+
+def categories_list(request):
+    return render(request,"category/index.html")
+
+def create_categories(request):
+   if request.method == "POST":
+        category_name = request.POST.get("category_name")
+        print(category_name)
+        admin_instance = Category()
+        admin_instance.category_name = category_name
+        admin_instance.save()
 
 
+
+    return render(request,"category/createcategories.html")
 
 def admin_signup(request):
     if request.method == "POST":
@@ -64,12 +77,6 @@ def admin_signup(request):
      return redirect("admin_login")
     
     return render(request,"admin_signup.html")
-
-
-
-
-
-
 
 
 
