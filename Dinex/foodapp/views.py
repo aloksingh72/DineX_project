@@ -115,7 +115,9 @@ def edit_sub_categories(request,subcategory_id):
       return render(request,"subcategory/editsubcategory.html",
                     context={"edit_subcategory":edit_subcategory,"categories":categories})
 
-
+def delete_sub_categories(request):
+    
+    return render(request,"sub_category_list")
 
 def admin_signup(request):
     if request.method == "POST":
