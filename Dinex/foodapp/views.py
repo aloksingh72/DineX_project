@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from .models import AdminDetails
+from .models import *
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
@@ -35,8 +35,33 @@ def admin_login(request):
 def admin_dashboard(request):
    return render(request,"index.html")
 
+
+# view for show the listing of the category
 def categories_list(request):
-    return render(request,"category/index.html")
+    # here we have to show the listing 
+    # making object of the model
+    category = Category.objects.all().order_by("id")
+    return render(request,"category/index.html",context={"category_data":category})
+
+def edit_category(request,pk):
+    edit_cat = Category.objects.filter(id =pk).last()
+    print(edit_cat,"==================>")
+    if request.method == "POST":
+        new_category_name = request.POST.get("edit_category")
+        if new_category_name:
+            edit_cat.category_name = new_category_name
+            edit_cat.save()
+            return redirect("categories")
+
+    return render(request,"category/editcategory.html",context={"edit_category":edit_cat})
+
+def delete_category(request,pk):
+    delete_category = Category.objects.filter(id= pk).last()
+    delete_category.delete()
+    return redirect("categories")
+
+
+    # return render(request,"category/deletecategory.html")
 
 def create_categories(request):
    if request.method == "POST":
@@ -45,10 +70,9 @@ def create_categories(request):
         admin_instance = Category()
         admin_instance.category_name = category_name
         admin_instance.save()
+        return redirect("categories")
 
-
-
-    return render(request,"category/createcategories.html")
+   return render(request,"category/createcategories.html")
 
 def admin_signup(request):
     if request.method == "POST":
