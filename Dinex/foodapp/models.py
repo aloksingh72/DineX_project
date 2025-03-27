@@ -18,8 +18,16 @@ class Category(models.Model):
     def __str__(self):
         return self.category_name
     
-#product model
+#sub-category models
+class SubCategory(models.Model):
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="subcategories")
+    sub_category_name = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return self.sub_category_name
+
+
+#product model
 class Product(models.Model):
     category= models.ForeignKey(Category,on_delete=models.CASCADE)
     prod_name = models.CharField(max_length=100)

@@ -74,6 +74,49 @@ def create_categories(request):
 
    return render(request,"category/createcategories.html")
 
+def sub_category_list(request):
+    subcategories = SubCategory.objects.all().order_by("id")  # Fetch all subcategories
+    return render(request, "subcategory/index.html", {"subcategories": subcategories})
+
+
+def create_sub_categories(request):
+    create_sub_cat = Category.objects.all().order_by("id")
+    if request.method == "POST":
+        category_id = request.POST.get("category")
+        sub_category_name = request.POST.get("sub_category_name")
+        print(sub_category_name)
+        if category_id and sub_category_name:
+            category = Category.objects.get(id=category_id)  # Fetch category instance
+            sub_category_instance = SubCategory.objects.create(category=category, sub_category_name=sub_category_name)  
+            sub_category_instance.save()
+
+            return redirect("sub_category_list") 
+
+        
+    return render(request,"subcategory/createsubcategory.html",context={"create_sub_cat":create_sub_cat})
+
+
+def edit_sub_categories(request,subcategory_id):
+      edit_subcategory = SubCategory.objects.get(id=subcategory_id)
+      categories = Category.objects.all()
+       
+      if request.method == "POST":
+        category_id = request.POST.get("category")  # Get selected category from dropdown
+        sub_category_name = request.POST.get("sub_category_name")  # Get updated subcategory name
+
+        if category_id and sub_category_name:
+            edit_subcategory.category = Category.objects.get(id=category_id)  # Update category
+            edit_subcategory.sub_category_name = sub_category_name  # Update subcategory name
+            edit_subcategory.save()  # Save changes
+
+            return redirect("sub_category_list")
+
+
+      return render(request,"subcategory/editsubcategory.html",
+                    context={"edit_subcategory":edit_subcategory,"categories":categories})
+
+
+
 def admin_signup(request):
     if request.method == "POST":
      username = request.POST["username"]
@@ -103,7 +146,9 @@ def admin_signup(request):
     return render(request,"admin_signup.html")
 
 
-
+def product_list(request):
+    return render(request,"product/index.html")
 
 def user_login(request):
+
     return render(request,"user_login.html")

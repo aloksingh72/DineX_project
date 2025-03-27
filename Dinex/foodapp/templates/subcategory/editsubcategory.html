@@ -1,0 +1,34 @@
+{% include 'commans/header.html' %}
+
+<div class="container mt-4">
+    <h3 class="mb-4">Edit Subcategory</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Dropdown for selecting category -->
+        <div class="form-group">
+            <label for="categorySelect">Select Category</label>
+            <select name="category" id="categorySelect" class="form-control">
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == edit_subcategory.category.id %}selected{% endif %}>
+                    {{ category.category_name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+
+        <!-- Input for editing subcategory name -->
+        <div class="form-group">
+            <label for="inputSubCategory">Edit Subcategory</label>
+            <input type="text" name="sub_category_name" class="form-control" id="inputSubCategory"
+                value="{{ edit_subcategory.sub_category_name }}" placeholder="Edit Subcategory">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+{% include 'commans/footer.html' %}

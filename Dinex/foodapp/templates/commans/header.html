@@ -54,7 +54,12 @@
                     <span>Category</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{% url 'sub_category_list'%}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Sub-Category</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'products' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Product</span></a>
             </li>

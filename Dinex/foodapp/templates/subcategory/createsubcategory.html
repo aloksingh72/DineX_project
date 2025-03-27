@@ -1,0 +1,31 @@
+{% include 'commans/header.html' %}
+
+<div class="container mt-4">
+    <h3 class="mb-4">Create Sub-Category</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Dropdown for Selecting Category -->
+        <div class="form-group">
+            <label for="categorySelect">Select Category</label>
+            <select name="category" id="categorySelect" class="form-control" required>
+                <option value="" selected disabled>-- Select Category --</option>
+                {% for category in create_sub_cat %}
+                    <option value="{{ category.id }}">{{ category.category_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Input for Sub-Category Name -->
+        <div class="form-group mt-3">
+            <label for="subCategoryInput">Enter Sub-Category Name</label>
+            <input type="text" name="sub_category_name" class="form-control" id="subCategoryInput" placeholder="Enter Sub-Category" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+
+{% include 'commans/footer.html' %}
