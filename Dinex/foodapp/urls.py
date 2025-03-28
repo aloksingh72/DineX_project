@@ -19,8 +19,10 @@ urlpatterns = [
     path('sub-category/',sub_category_list,name="sub_category_list"),
     path('create-sub-categories',create_sub_categories,name="create_sub_categories"),
     path('edit-sub-categories/<int:subcategory_id>/',edit_sub_categories,name="edit_sub_categories"),
-    path('delete-sub-categories/<int:subcategory_id/',delete_sub_categories,name="delete_sub_categories"),
+    path('delete-sub-categories/<int:subcategory_id>/',delete_sub_categories,name="delete_sub_categories"),
 
 
-    path('product/',product_list,name="products")
+    #urls for products
+    path('product/',product_list,name="products"),
+    path('create-product/',create_product,name ="create_product"),
 ]

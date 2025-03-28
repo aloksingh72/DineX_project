@@ -9,8 +9,6 @@ def home(request):
     return render(request,"home.html")
 
 
-
-
 def admin_logout(request):
     request.session.flush()  # Clear session
     messages.success(request, "Logged out successfully!")
@@ -45,7 +43,7 @@ def categories_list(request):
 
 def edit_category(request,pk):
     edit_cat = Category.objects.filter(id =pk).last()
-    print(edit_cat,"==================>")
+    print(edit_cat,"<==================>")
     if request.method == "POST":
         new_category_name = request.POST.get("edit_category")
         if new_category_name:
@@ -91,8 +89,6 @@ def create_sub_categories(request):
             sub_category_instance.save()
 
             return redirect("sub_category_list") 
-
-        
     return render(request,"subcategory/createsubcategory.html",context={"create_sub_cat":create_sub_cat})
 
 
@@ -115,9 +111,12 @@ def edit_sub_categories(request,subcategory_id):
       return render(request,"subcategory/editsubcategory.html",
                     context={"edit_subcategory":edit_subcategory,"categories":categories})
 
-def delete_sub_categories(request):
+def delete_sub_categories(request,subcategory_id):
+    sub_category_instance = SubCategory.objects.filter(id = subcategory_id).last()
+    sub_category_instance.delete()
+    return redirect("sub_category_list")
     
-    return render(request,"sub_category_list")
+    
 
 def admin_signup(request):
     if request.method == "POST":
@@ -147,9 +146,40 @@ def admin_signup(request):
     
     return render(request,"admin_signup.html")
 
-
+# --------------------------------views for products-------------------------
 def product_list(request):
     return render(request,"product/index.html")
+
+# views for create_product 
+def create_product(request):
+    categories = Category.objects.all()
+    sub_categories = SubCategory.objects.all()
+    if request.method == "POST":
+        category_id = request.POST.get("category")
+        sub_category_id = request.POST.get("sub_category")
+        product_name = request.POST.get("product_name")
+        price = request.POST.get("price")
+        description = request.POST.get("description")
+        #geting categories and sub-categories instances
+        category = Category.objects.get(id = category_id)
+        sub_category = SubCategory.objects.get(id = sub_category_id)
+
+        # Create and Save the Product
+        Product.objects.create(
+            category = category,
+            sub_category = sub_category,
+            prod_name = product_name,
+            price = price,
+            description = description
+
+
+        )
+        return redirect("products")
+    
+
+
+    return render(request,"product/createproduct.html",
+                  context={"categories":categories,"sub_categories":sub_categories})
 
 def user_login(request):
 

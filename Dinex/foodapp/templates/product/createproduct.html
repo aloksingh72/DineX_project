@@ -1,0 +1,52 @@
+{% include 'commans/header.html' %}
+
+<div class="container mt-4">
+    <h3 class="text-primary">Add a New Product</h3>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Category Dropdown -->
+        <div class="form-group">
+            <label for="category">Select Category</label>
+            <select name="category" class="form-control" id="category" required>
+                <option value="">-- Select a Category --</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}">{{ cat.category_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- Sub-Category Dropdown -->
+        <div class="form-group">
+            <label for="sub-category">Select Sub-Category</label>
+            <select name="sub_category" class="form-control" id="sub-category" required>
+                <option value="">-- Select a Sub-Category --</option>
+                {% for sub_cat in sub_categories %}
+                    <option value="{{ sub_cat.id }}">{{ sub_cat.sub_category_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Product Name -->
+        <div class="form-group">
+            <label for="product_name">Product Name</label>
+            <input type="text" name="product_name" class="form-control" id="product_name" placeholder="Enter Product Name" required>
+        </div>
+
+        <!-- Price -->
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" name="price" class="form-control" id="price" placeholder="Enter Price" required>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" class="form-control" id="description" rows="3" placeholder="Enter Product Description"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+</div>
+
+{% include 'commans/footer.html' %}
