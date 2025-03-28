@@ -1,0 +1,60 @@
+{% include 'commans/header.html' %}
+
+<div class="container mt-4">
+    <h3 class="mb-4">Edit Product</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Dropdown for selecting category -->
+        <div class="form-group">
+            <label for="categorySelect">Select Category</label>
+            <select name="category" id="categorySelect" class="form-control">
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == product.category.id %}selected{% endif %}>
+                    {{ category.category_name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+         
+
+         <!-- Dropdown for selecting sub-category -->
+         <div class="form-group">
+            <label for="categorySelect">Select Sub-Category</label>
+            <select name="sub_category" id="categorySelect" class="form-control">
+               {% for sub_category in sub_categories%}
+                <option value="{{ sub_category.id }}" {% if sub_category.id == product.sub_category.id %}selected{% endif %}>
+                    {{ sub_category.sub_category_name }}
+                </option>
+               {%endfor%}
+            </select>
+        </div>
+        
+
+        <!-- Input for editing Product name -->
+        <div class="form-group">
+            <label for="inputProdName">Edit Product Name</label>
+            <input type="text" name="product_name" class="form-control" id="inputProdName"
+                value="{{product.prod_name}} " placeholder="Edit Product Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="inputPricee">Edit Price</label>
+            <input type="text" name="product_price" class="form-control" id="inputPrice"
+                value="{{product.price}} " placeholder="Edit Price" required>
+        </div>
+
+        <div class="form-group">
+            <label for="inputDescription">Edit Description</label>
+            <input type="text" name="product_description" class="form-control" id="inputDescription"
+                value="{{product.description}} " placeholder="Edit Price">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+{% include 'commans/footer.html' %}

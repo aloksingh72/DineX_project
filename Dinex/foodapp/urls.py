@@ -25,4 +25,6 @@ urlpatterns = [
     #urls for products
     path('product/',product_list,name="products"),
     path('create-product/',create_product,name ="create_product"),
+    path('edit-product/<int:product_id>/',edit_product,name="edit_product"),
+    path('delete-product/<int:product_id>',delete_product,name="delete_product"),
 ]

@@ -5,7 +5,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-    
+
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -18,30 +18,40 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th style="width: 20%;">Product Id</th>
-                            <th>Product</th>
-                            <th>Category</th>
-                            <th>Sub-Category</th>
-                            <th style = "width:30%;">Action</th>
-                            
+                            <th style="font-weight: bold; color: black; width: 10%;">Product Id</th>
+                            <th style="font-weight: bold; color: black;">Product</th>
+                            <th style="font-weight: bold; color: black;">Category</th>
+                            <th style="font-weight: bold; color: black; width: 13%;">Sub-Category</th>
+                            <th style="font-weight: bold; color: black;">Price</th>
+                            <th style="font-weight: bold; color: black;">Description</th>
+                            <th style="font-weight: bold; color: black; width:15%;">Action</th>
+
                         </tr>
                     </thead>
-                   
+
                     <tbody>
-                        
-                        
+
+                        {% for prod in product_data%}
                         <tr>
-                            <td>1.</td>
-                            <td>Samsung S24</td>
-                            <td>Electronics</td>
-                            <td>Mobile Phones</td>
+                            <td>{{forloop.counter}}</td>
+                            <td> {{prod.prod_name}} </td>
+                            <td> {{prod.category.category_name}} </td>
+                            <td> {{prod.sub_category.sub_category_name}} </td>
+                            <td> {{prod.price}} </td>
+                            <td> {{prod.description}} </td>
                             <td>
-                            <a href=""class="btn btn-primary btn-sm">Edit</a>
-                            <a href="" class = "btn btn-danger btn-sm">Delete</a>
+
+                                <a href="{% url 'edit_product' prod.id %}" class="btn btn-primary btn-sm">Edit</a>
+
+
+
+
+                                <a href="{% url 'delete_product' prod.id %}" class="btn btn-danger btn-sm">Delete</a>
                             </td>
-                            
+
                         </tr>
-                        
+                        {%endfor%}
+
                     </tbody>
                 </table>
             </div>

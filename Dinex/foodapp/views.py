@@ -146,9 +146,10 @@ def admin_signup(request):
     
     return render(request,"admin_signup.html")
 
-# --------------------------------views for products-------------------------
+# --------------------------------views for products----------------------------------
 def product_list(request):
-    return render(request,"product/index.html")
+    product_instance = Product.objects.all().order_by("-id")
+    return render(request,"product/index.html",context={"product_data":product_instance})
 
 # views for create_product 
 def create_product(request):
@@ -180,6 +181,44 @@ def create_product(request):
 
     return render(request,"product/createproduct.html",
                   context={"categories":categories,"sub_categories":sub_categories})
+
+def edit_product(request,product_id):
+    product = Product.objects.get(id=product_id) 
+    
+    categories = Category.objects.all()
+    sub_categories = SubCategory.objects.filter(category = product.category)
+
+    if request.method  =='POST':
+        product.prod_name = request.POST.get("product_name")
+        product.price = request.POST.get("product_price")
+        product.description = request.POST.get("product_description")
+        category_id = request.POST.get("category")
+        sub_category_id = request.POST.get("sub_category")
+
+        # Update category and subcategory if selected
+        if category_id:
+            try:
+                product.category = Category.objects.get(id=category_id)
+            except Category.DoesNotExist:
+                pass  # Ignore if invalid category is provided
+
+        if sub_category_id:
+            try:
+                product.sub_category = SubCategory.objects.get(id=sub_category_id)
+            except SubCategory.DoesNotExist:
+                pass  # Ignore if invalid sub-category is provided
+
+            product.save()
+            return redirect("products")
+
+    return render(request,"product/editproduct.html",
+                  context={"product":product,"categories":categories,"sub_categories":sub_categories})
+
+
+def delete_product(request,product_id):
+    product_instance = Product.objects.filter(id=product_id).last()
+    product_instance.delete()
+    return redirect("products")
 
 def user_login(request):
 
