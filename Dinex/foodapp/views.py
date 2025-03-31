@@ -4,16 +4,18 @@ from .models import *
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth import logout,login
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
     return render(request,"home.html")
 
 
 def admin_logout(request):
-    request.session.flush()  # Clear session
+    logout(request)  # Logs out the user
+    request.session.flush()  # Clears session data
     messages.success(request, "Logged out successfully!")
-    return redirect("admin_login")
-
+    return redirect("admin_login")  # Redirects to login page
 
 def admin_login(request):
     if request.method == "POST":
@@ -21,14 +23,16 @@ def admin_login(request):
        password = request.POST["password"]
        
     #    admin_instance = authenticate(request,email = email,password = password)
-       admin_instance = AdminDetails.objects.get(email= email)
+       admin_instance = UserDetails.objects.get(email= email)
        if check_password(password,admin_instance.password):
+                    login(request, admin_instance)
                     print("user_login=============>")
                     request.session["admin_id"] = admin_instance.id
                     messages.success(request,"Admin login succesful")
                     return redirect("admin_dashboard")
        
     return render(request,"admin_login.html")
+
 
 def admin_dashboard(request):
    return render(request,"index.html")
@@ -144,17 +148,17 @@ def admin_signup(request):
         messages.error(request,"Passwords does not match")
         return redirect("admin_signup")
     
-     if AdminDetails.objects.filter(email = email).exists():
+     if UserDetails.objects.filter(email = email).exists():
         messages.error(request,"Email is already exists")
         return redirect("admin_signup")
     
-     if AdminDetails.objects.filter(username = username).exists():
+     if UserDetails.objects.filter(username = username).exists():
       messages.error(request,"username is already exists")
       return redirect("admin_signup")
     #  hashing password 
      hashed_password = make_password(password)
 
-     admin = AdminDetails(username = username,email = email,password = hashed_password)
+     admin = UserDetails(username = username,email = email,password = hashed_password)
      admin.save()
      messages.success(request,"Admin registered successfully")
      return redirect("admin_login")
@@ -216,7 +220,6 @@ def load_subcategories(request):
     category_id = request.GET.get('category_id')
     subcategories = SubCategory.objects.filter(category_id=category_id).values('id', 'sub_category_name')
     return JsonResponse(list(subcategories), safe=False)
-
 
 
 

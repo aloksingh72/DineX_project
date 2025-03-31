@@ -1,6 +1,23 @@
 from django.db import models
-
+from foodapp.manager import *
+from django.contrib.auth.models import AbstractBaseUser
 # Create your models here.
+class UserDetails(AbstractBaseUser):
+    username = models.CharField(max_length =100,unique = True)
+    email= models.EmailField(max_length =100,unique =True)
+    password = models.CharField(max_length=100)
+    confirm_password= models.CharField(max_length =100)
+    created_on = models.DateTimeField(auto_now_add = True)
+   
+    is_active =models.BooleanField(default = True)
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []  # add any required fields besides email
+
+    class Meta:
+        db_table = "user_details"
+
 
 class AdminDetails(models.Model):
     username = models.CharField(max_length=100,unique=True)
