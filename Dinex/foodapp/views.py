@@ -239,9 +239,9 @@ def create_product(request):
         description = request.POST.get("description")
 
         # Validate category selection
-        if category_id:
+        if category_id and sub_category_id:
             category = Category.objects.get(id=category_id)
-            sub_category = SubCategory.objects.get(id=sub_category_id) if sub_category_id else None
+            sub_category = SubCategory.objects.get(id=sub_category_id)
 
             # Create and save the product
             Product.objects.create(
