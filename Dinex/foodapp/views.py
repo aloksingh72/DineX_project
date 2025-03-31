@@ -36,10 +36,16 @@ def admin_dashboard(request):
 
 # view for show the listing of the category
 def categories_list(request):
-    # here we have to show the listing 
-    # making object of the model
+   query = request.GET.get('query','')
+   if query:
+    category = Category.objects.filter(category_name__icontains = query)
+    category = category.order_by("id")
+   else:
     category = Category.objects.all().order_by("id")
-    return render(request,"category/index.html",context={"category_data":category})
+
+    # making object of the model
+ 
+   return render(request,"category/index.html",context={"category_data":category})
 
 def edit_category(request,pk):
     edit_cat = Category.objects.filter(id =pk).last()
@@ -73,7 +79,16 @@ def create_categories(request):
    return render(request,"category/createcategories.html")
 
 def sub_category_list(request):
-    subcategories = SubCategory.objects.all().order_by("id")  # Fetch all subcategories
+    query = request.GET.get('query','')
+    print(query)
+    if query:
+        subcategories = SubCategory.objects.filter(category__category_name__icontains=query) | SubCategory.objects.filter(sub_category_name__icontains=query)
+        subcategories = subcategories.order_by("id")
+        # subcategories = SubCategory.objects.filter(sub_category_name__icontains = query).order_by("id")
+    else:
+        subcategories = SubCategory.objects.all().order_by("id")  # Fetch all subcategories
+
+ 
     return render(request, "subcategory/index.html", {"subcategories": subcategories})
 
 
@@ -148,39 +163,51 @@ def admin_signup(request):
 
 # --------------------------------views for products----------------------------------
 def product_list(request):
-    product_instance = Product.objects.all().order_by("-id")
+    query = request.GET.get('query','')
+    if query:
+        product_instance = Product.objects.filter(prod_name__icontains = query).order_by("id")
+    else:
+         product_instance = Product.objects.all().order_by("-id")
+
     return render(request,"product/index.html",context={"product_data":product_instance})
 
 # views for create_product 
 def create_product(request):
     categories = Category.objects.all()
-    sub_categories = SubCategory.objects.all()
+    selected_category_id = request.GET.get("category", "")  # Get selected category from query params
+    sub_categories = SubCategory.objects.none()  # Initially empty
+
+    # Ensure category_id is valid before filtering subcategories
+    if selected_category_id.isdigit():  
+        sub_categories = SubCategory.objects.filter(category_id=selected_category_id)
+
     if request.method == "POST":
         category_id = request.POST.get("category")
         sub_category_id = request.POST.get("sub_category")
         product_name = request.POST.get("product_name")
         price = request.POST.get("price")
         description = request.POST.get("description")
-        #geting categories and sub-categories instances
-        category = Category.objects.get(id = category_id)
-        sub_category = SubCategory.objects.get(id = sub_category_id)
 
-        # Create and Save the Product
-        Product.objects.create(
-            category = category,
-            sub_category = sub_category,
-            prod_name = product_name,
-            price = price,
-            description = description
+        # Check if category and subcategory are selected before querying the database
+        if category_id and sub_category_id:
+            category = Category.objects.get(id=category_id)
+            sub_category = SubCategory.objects.get(id=sub_category_id)
 
+            # Create and save the product
+            Product.objects.create(
+                category=category,
+                sub_category=sub_category,
+                prod_name=product_name,
+                price=price,
+                description=description
+            )
+            return redirect("products")
 
-        )
-        return redirect("products")
-    
-
-
-    return render(request,"product/createproduct.html",
-                  context={"categories":categories,"sub_categories":sub_categories})
+    return render(request, "product/createproduct.html", {
+        "categories": categories,
+        "sub_categories": sub_categories,
+        "selected_category_id": selected_category_id,
+    })
 
 def edit_product(request,product_id):
     product = Product.objects.get(id=product_id) 
@@ -219,6 +246,7 @@ def delete_product(request,product_id):
     product_instance = Product.objects.filter(id=product_id).last()
     product_instance.delete()
     return redirect("products")
+
 
 def user_login(request):
 
