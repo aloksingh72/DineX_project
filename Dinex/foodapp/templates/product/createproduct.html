@@ -4,9 +4,9 @@
     <h3 class="text-primary">Add a New Product</h3>
     <form method="POST">
         {% csrf_token %}
-        
-       <!-- Category Dropdown -->
-    <div class="form-group">
+
+        <!-- Category Dropdown -->
+        <!-- <div class="form-group">
         <label for="category">Select Category</label>
         <select name="category" class="form-control" id="category" required onchange="this.form.submit()">
             <option value="">-- Select a Category --</option>
@@ -14,10 +14,10 @@
                 <option value="{{ cat.id }}" {% if cat.id|stringformat:"s" == selected_category_id %}selected{% endif %}>{{ cat.category_name }}</option>
             {% endfor %}
         </select>
-    </div>
+    </div> -->
 
-    <!-- Sub-Category Dropdown (Filtered based on selected category) -->
-    <div class="form-group">
+        <!-- Sub-Category Dropdown (Filtered based on selected category) -->
+        <!-- <div class="form-group">
         <label for="sub-category">Select Sub-Category</label>
         <select name="sub_category" class="form-control" id="sub-category" required>
             <option value="">-- Select a Sub-Category --</option>
@@ -27,7 +27,25 @@
                 </option>
             {% endfor %}
         </select>
-    </div>
+    </div> -->
+        <div class="form-group">
+            <label for="categorySelect">Choose a Category:</label>
+            <select name="category" class="form-control" required id="categorySelect">
+                <option value="">Select Category</option>
+                {% for cate in categories%}
+                <option value="{{cate.id}}">{{cate}}</option>
+                {% endfor %}
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="subCatSelect">Choose a Sub Category:</label>
+            <select class="form-control" required id="subCatSelect">
+                <option value="">Select Sub-Category</option>
+            </select>
+        </div>
         <!-- <div class="form-group">
             <label for="sub-category">Select Sub-Category</label>
             <select name="sub_category" class="form-control" id="sub-category" required>
@@ -41,7 +59,8 @@
         <!-- Product Name -->
         <div class="form-group">
             <label for="product_name">Product Name</label>
-            <input type="text" name="product_name" class="form-control" id="product_name" placeholder="Enter Product Name" required>
+            <input type="text" name="product_name" class="form-control" id="product_name"
+                placeholder="Enter Product Name" required>
         </div>
 
         <!-- Price -->
@@ -53,12 +72,35 @@
         <!-- Description -->
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea name="description" class="form-control" id="description" rows="3" placeholder="Enter Product Description"></textarea>
+            <textarea name="description" class="form-control" id="description" rows="3"
+                placeholder="Enter Product Description"></textarea>
         </div>
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">Add Product</button>
     </form>
 </div>
+<script>
+    document.getElementById("categorySelect").addEventListener("change", function () {
+        let categoryId = this.value;
+        let subCatSelect = document.getElementById("subCatSelect");
 
+        // Clear previous options
+        subCatSelect.innerHTML = '<option value="">Select Product</option>';
+
+        if (categoryId) {
+            fetch(`/get-products/?category_id=${categoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(product => {
+                        let option = document.createElement("option");
+                        option.value = product.id;
+                        option.textContent = product.sub_category_name;
+                        subCatSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error:", error));
+        }
+    });
+</script>
 {% include 'commans/footer.html' %}

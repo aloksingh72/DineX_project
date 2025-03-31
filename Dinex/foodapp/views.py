@@ -172,13 +172,63 @@ def product_list(request):
     return render(request,"product/index.html",context={"product_data":product_instance})
 
 # views for create_product 
-def create_product(request):
-    categories = Category.objects.all()
-    selected_category_id = request.GET.get("category", "")  # Get selected category from query params
-    sub_categories = SubCategory.objects.none()  # Initially empty
+# def create_product(request):
+#     categories = Category.objects.all()
+#     sub_categories = SubCategory.objects.none()
 
-    # Ensure category_id is valid before filtering subcategories
-    if selected_category_id.isdigit():  
+
+#     selected_categories_id = request.GET.get("category","")
+
+#     if selected_categories_id:
+#         sub_categories = SubCategory.objects.filter(category_id = selected_categories_id)
+
+#     if request.method == "POST":
+#         category_id = request.POST.get("category")
+#         sub_category_id = request.POST.get("sub_category")
+#         product_name = request.POST.get("product_name")
+#         price = request.POST.get("price")
+#         description = request.POST.get("description")
+
+#         #geting categories and sub-categories instances
+#         category = Category.objects.get(id = category_id)
+#         sub_category = SubCategory.objects.get(id = sub_category_id)
+
+#         # Create and Save the Product
+#         Product.objects.create(
+#             category = category,
+#             sub_category = sub_category,
+#             prod_name = product_name,
+#             price = price,
+#             description = description
+
+#         )
+#         return redirect("products")
+    
+#     return render(request,"product/createproduct.html",
+#                   context={"categories":categories,
+#                            "sub_categories":sub_categories,
+#                            "selected_categories_id":selected_categories_id,})
+
+from django.http import JsonResponse
+from .models import SubCategory
+
+def load_subcategories(request):
+    category_id = request.GET.get('category_id')
+    subcategories = SubCategory.objects.filter(category_id=category_id).values('id', 'sub_category_name')
+    return JsonResponse(list(subcategories), safe=False)
+
+
+
+
+
+def create_product(request):
+    
+    categories = Category.objects.all()
+    selected_category_id = request.GET.get("category", "")  # Get category ID from request
+    sub_categories = SubCategory.objects.all()  # Default empty list
+
+    # If a category is selected, filter subcategories
+    if selected_category_id.isdigit():
         sub_categories = SubCategory.objects.filter(category_id=selected_category_id)
 
     if request.method == "POST":
@@ -188,10 +238,10 @@ def create_product(request):
         price = request.POST.get("price")
         description = request.POST.get("description")
 
-        # Check if category and subcategory are selected before querying the database
-        if category_id and sub_category_id:
+        # Validate category selection
+        if category_id:
             category = Category.objects.get(id=category_id)
-            sub_category = SubCategory.objects.get(id=sub_category_id)
+            sub_category = SubCategory.objects.get(id=sub_category_id) if sub_category_id else None
 
             # Create and save the product
             Product.objects.create(
@@ -199,10 +249,10 @@ def create_product(request):
                 sub_category=sub_category,
                 prod_name=product_name,
                 price=price,
-                description=description
+                description=description,
             )
-            return redirect("products")
-
+            return redirect("products")  # Redirect after successful save
+  
     return render(request, "product/createproduct.html", {
         "categories": categories,
         "sub_categories": sub_categories,
@@ -251,3 +301,13 @@ def delete_product(request,product_id):
 def user_login(request):
 
     return render(request,"user_login.html")
+
+from django.http import JsonResponse
+
+def get_data(request):
+    if request.method == "GET":
+        a = request.GET.get('category_id')
+        sub_categories_list = SubCategory.objects.filter(category_id=a).all().values('id','sub_category_name')
+        print(a)
+      
+        return JsonResponse(list(sub_categories_list), safe=False)
