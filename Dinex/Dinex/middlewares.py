@@ -1,12 +1,12 @@
 from django.shortcuts import redirect
+from django.utils.deprecation import MiddlewareMixin
 from django.contrib.auth import logout
 
-class LogoutMiddleware:
-    def __init__(self,get_response):
-        self.get_response = get_response
+class LogoutMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        if request.user.is_authenticated:  # Checks if user is logged in
+            return None  # Allows the request to proceed
 
-    def __call__(self,request):
-        if not request.user :
-            logout(request)
-            return redirect("/login/")
-        return self.get_response(request)
+        # If user is not logged in, log out and redirect
+        logout(request)
+        return redirect("/admin_login/")  # Redirect to login page
