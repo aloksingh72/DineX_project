@@ -35,7 +35,7 @@ Welcome to **DineX**, a modern and efficient **Restaurant Management System** de
 
 | Backend | Frontend | Database | Authentication |
 |---------|---------|----------|---------------|
-| Django (Python) | Tailwind CSS, HTML, JavaScript | SQLite / PostgreSQL | Django Auth, Custom Middleware |
+| Django (Python) | Tailwind CSS, HTML, JavaScript | SQLite  | Django Auth, Custom Middleware |
 
 ---
 
