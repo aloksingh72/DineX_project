@@ -15,7 +15,7 @@
     <div class="relative">
         
         <!-- Left Button -->
-        <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700">
+        <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2  text-white p-3 rounded-full hover:bg-gray-700">
             ❮
         </button>
 
@@ -35,7 +35,7 @@
         </div>
 
         <!-- Right Button -->
-        <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700">
+        <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2  text-white p-3 rounded-full hover:bg-gray-700">
             ❯
         </button>
     </div>
@@ -43,20 +43,53 @@
     <!-- JavaScript for Scrolling -->
     <script>
         const categorySlider = document.getElementById('categorySlider');
-        const scrollAmount = 220;  // Amount to scroll per click
+        const categories = document.querySelectorAll('.category-item');
+        const scrollAmount = 220; // Each category width + gap
         let index = 0;
+        let interval;
 
-        function showSlide(newIndex) {
-            index = newIndex < 0 ? 0 : newIndex;
+        function updateSlide() {
             categorySlider.style.transform = `translateX(-${index * scrollAmount}px)`;
         }
 
-        document.getElementById('prev').addEventListener('click', () => showSlide(index - 1));
-        document.getElementById('next').addEventListener('click', () => showSlide(index + 1));
+        function nextSlide() {
+            if (index < categories.length - 3) {
+                index++;
+            } else {
+                index = 0; // Reset back to start
+            }
+            updateSlide();
+        }
 
-        // Auto-scroll every 5 seconds
-        setInterval(() => showSlide(index + 1), 2000);
+        function prevSlide() {
+            if (index > 0) {
+                index--;
+            } else {
+                index = categories.length - 3; // Move to last possible position
+            }
+            updateSlide();
+        }
+
+        document.getElementById('next').addEventListener('click', () => {
+            nextSlide();
+            resetAutoScroll();
+        });
+
+        document.getElementById('prev').addEventListener('click', () => {
+            prevSlide();
+            resetAutoScroll();
+        });
+
+        function startAutoScroll() {
+            interval = setInterval(nextSlide, 3000); // Auto-scroll every 3 seconds
+        }
+
+        function resetAutoScroll() {
+            clearInterval(interval);
+            startAutoScroll();
+        }
+
+        startAutoScroll(); // Start auto-scroll when page loads
     </script>
-
 </body>
 </html>

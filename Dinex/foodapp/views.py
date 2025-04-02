@@ -99,7 +99,7 @@ def sub_category_list(request):
         subcategories = subcategories.order_by("-id")
         # subcategories = SubCategory.objects.filter(sub_category_name__icontains = query).order_by("id")
     else:
-        subcategories = SubCategory.objects.all().order_by("-`id")  # Fetch all subcategories
+        subcategories = SubCategory.objects.all().order_by("-id")  # Fetch all subcategories
 
  
     return render(request, "subcategory/index.html", {"subcategories": subcategories})
