@@ -1,0 +1,96 @@
+{% include 'commans/header.html' %}
+
+<div class="container mt-5">
+    <h3 class="text-center mb-4 fw-bold">Admin Analytics Dashboard</h3>
+
+    <div class="row g-4">
+        <!-- Sales & Revenue -->
+        <div class="col-md-3">
+            <div class="card bg-primary text-white shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Sales</h5>
+                    <p class="display-5 fw-bold">₹542300</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-success text-white shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Revenue</h5>
+                    <p class="display-5 fw-bold">₹878452</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-warning text-white shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Top Selling Product</h5>
+                    <p class="fs-5 fw-bold">Masala Chai</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-danger text-white shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Pending Orders</h5>
+                    <p class="display-5 fw-bold">2</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User & Order Stats -->
+    <div class="row g-4 mt-4">
+        <div class="col-md-3">
+            
+            <div class="card bg-info text-white shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="display-5 fw-bold">1M</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-secondary text-white shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Active Users</h5>
+                    <p class="display-5 fw-bold">500K</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-dark text-white shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">New Users </h5>
+                    <p class="display-5 fw-bold">30K</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-primary text-white shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Average Order Value</h5>
+                    <p class="display-5 fw-bold">₹720</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-4">
+        <a href="" class="btn btn-primary btn-lg me-3 shadow">
+            View Orders
+        </a>
+        <a href="" class="btn btn-success btn-lg shadow">
+            Manage Users
+        </a>
+    </div>
+</div>
+
+{% include 'commans/footer.html' %}

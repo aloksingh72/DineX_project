@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DineX </title>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CSS -->
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="#" class="text-2xl font-semibold">DineX</a>
+
+            <!-- Menu Items -->
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="hover:text-gray-400 transition duration-300">Home</a>
+                <a href="#" class="hover:text-gray-400 transition duration-300">Menu</a>
+                <a href="#" class="hover:text-gray-400 transition duration-300">About</a>
+                
+                <!-- Dropdown -->
+                <div class="relative group">
+                    <button class="hover:text-gray-400 transition duration-300 flex items-center">
+                        More 
+                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-40 bg-white text-gray-900 shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Action</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Another action</a>
+                        <div class="border-t"></div>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Something else</a>
+                    </div>
+                </div>
+
+                <a href="#" class="text-gray-500 cursor-not-allowed">Disabled</a>
+            </div>
+
+            <!-- Search Bar & Profile Section -->
+            <div class="hidden md:flex items-center space-x-4">
+                
+                <!-- Search Bar -->
+                <div class="flex items-center space-x-2">
+                    <input type="text" placeholder="Search" class="px-3 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                    <button class="bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300">Search</button>
+                </div>
+
+                <!-- User Profile Section -->
+                <div class="relative group">
+                    <button class="flex items-center space-x-2 focus:outline-none">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-40 bg-white text-gray-900 shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Login</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden px-6 pb-4" id="mobile-menu">
+            <a href="#" class="block py-2 text-gray-300 hover:text-white">Home</a>
+            <a href="#" class="block py-2 text-gray-300 hover:text-white">Menu</a>
+            <a href="#" class="block py-2 text-gray-300 hover:text-white">About</a>
+            <a href="#" class="block py-2 text-gray-300 hover:text-white">Action</a>
+            <a href="#" class="block py-2 text-gray-300 hover:text-white">Another Action</a>
+            <a href="#" class="block py-2 text-gray-300 hover:text-white">Something Else</a>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+</html>

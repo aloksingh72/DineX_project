@@ -1,3 +1,4 @@
+from .models import SubCategory
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from .models import *
@@ -6,6 +7,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout,login
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 # Create your views here.
 def home(request):
     return render(request,"home.html")
@@ -35,7 +37,14 @@ def admin_login(request):
 
 
 def admin_dashboard(request):
-   return render(request,"index.html")
+   
+   category_count = Category.objects.count()
+   sub_category_count = SubCategory.objects.count()
+   product_count= Product.objects.count()
+
+   return render(request,"index.html",context={"category_count":category_count,
+                                               "sub_category_count":sub_category_count,
+                                               "product_count":product_count})
 
 
 # view for show the listing of the category
@@ -87,10 +96,10 @@ def sub_category_list(request):
     print(query)
     if query:
         subcategories = SubCategory.objects.filter(category__category_name__icontains=query) | SubCategory.objects.filter(sub_category_name__icontains=query)
-        subcategories = subcategories.order_by("id")
+        subcategories = subcategories.order_by("-id")
         # subcategories = SubCategory.objects.filter(sub_category_name__icontains = query).order_by("id")
     else:
-        subcategories = SubCategory.objects.all().order_by("id")  # Fetch all subcategories
+        subcategories = SubCategory.objects.all().order_by("-`id")  # Fetch all subcategories
 
  
     return render(request, "subcategory/index.html", {"subcategories": subcategories})
@@ -213,8 +222,6 @@ def product_list(request):
 #                            "sub_categories":sub_categories,
 #                            "selected_categories_id":selected_categories_id,})
 
-from django.http import JsonResponse
-from .models import SubCategory
 
 def load_subcategories(request):
     category_id = request.GET.get('category_id')
@@ -314,3 +321,9 @@ def get_data(request):
         print(a)
       
         return JsonResponse(list(sub_categories_list), safe=False)
+    
+
+
+def show_analytics(request):
+
+    return render(request,"analytics.html")

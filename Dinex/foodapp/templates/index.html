@@ -1,3 +1,50 @@
-{% include 'commans/header.html'%}
+{% include 'commans/header.html' %}
 
-{% include 'commans/footer.html'%}
+<!-- Admin Dashboard Container -->
+<div class="container mt-5">
+    <h3 class="text-center mb-4 fw-bold">Admin Dashboard</h3>
+
+    <div class="row g-4">
+        <!-- Total Categories Card -->
+        <div class="col-md-4">
+            <div class="card text-white bg-primary shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Categories</h5>
+                    <p class="display-4 fw-bold">{{ category_count }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Sub Categories Card -->
+        <div class="col-md-4">
+            <div class="card text-white bg-success shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Sub Categories</h5>
+                    <p class="display-4 fw-bold">{{ sub_category_count }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Products Card -->
+        <div class="col-md-4">
+            <div class="card text-white bg-danger shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Products</h5>
+                    <p class="display-4 fw-bold">{{ product_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-4">
+        <a href="{% url 'create_categories' %}" class="btn btn-primary btn-lg me-3 shadow">
+            Add Category
+        </a>
+        <a href="{% url 'create_product' %}" class="btn btn-success btn-lg shadow">
+            Add Product
+        </a>
+    </div>
+</div>
+
+{% include 'commans/footer.html' %}
