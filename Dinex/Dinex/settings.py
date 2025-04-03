@@ -128,3 +128,8 @@ STATICFILES_DIRS =[os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'foodapp.UserDetails'
+
+
+# Media file configuration
+MEDIA_URL = '/media/'  # URL to access media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Absolute path where images are stored

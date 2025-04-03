@@ -2,7 +2,7 @@
 
 <div class="container mt-4">
     <h3 class="text-primary">Add a New Product</h3>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         <!-- Category Dropdown -->
@@ -74,6 +74,11 @@
             <label for="description">Description</label>
             <textarea name="description" class="form-control" id="description" rows="3"
                 placeholder="Enter Product Description"></textarea>
+        </div>
+        <!-- add the product image -->
+        <div class="form-group">
+            <label for="product_image">Upload Product Image</label>
+            <input type="file" name="product_image" class="form-control-file" id="product_image" accept="image/*" required>
         </div>
 
         <!-- Submit Button -->

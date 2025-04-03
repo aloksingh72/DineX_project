@@ -1,0 +1,58 @@
+{% include 'user_commans/header.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - DineX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-6">
+        <h2 class="text-2xl font-bold text-center mb-6">User Profile</h2>
+
+        <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+            <!-- Profile Image Section -->
+            <div class="text-center mb-4">
+                <img id="profileImage" src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="Profile" class="w-24 h-24 rounded-full mx-auto">
+                <input type="file" id="imageUpload" class="mt-2 text-sm text-gray-600">
+            </div>
+
+            <!-- Form Section -->
+            <form action="#" method="POST" class="space-y-4">
+                <div>
+                    <label class="block font-semibold">Full Name</label>
+                    <input type="text" placeholder="Enter your name" class="w-full border px-3 py-2 rounded-lg">
+                </div>
+
+                <div>
+                    <label class="block font-semibold">Email</label>
+                    <input type="email" placeholder="Enter your email" class="w-full border px-3 py-2 rounded-lg" disabled>
+                </div>
+
+                <div>
+                    <label class="block font-semibold">Phone Number</label>
+                    <input type="text" placeholder="Enter your phone number" class="w-full border px-3 py-2 rounded-lg">
+                </div>
+
+                <div>
+                    <label class="block font-semibold">Address</label>
+                    <textarea placeholder="Enter your address" class="w-full border px-3 py-2 rounded-lg"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-semibold">Favorite Food Items</label>
+                    <input type="text" placeholder="e.g., Biryani, Pizza, Pasta" class="w-full border px-3 py-2 rounded-lg">
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+{% include 'user_commans/footer.html' %}

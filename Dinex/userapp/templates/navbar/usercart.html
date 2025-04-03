@@ -1,0 +1,93 @@
+{% include 'user_commans/header.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DineX Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-6">
+        <h2 class="text-2xl font-bold mb-4">Shopping Cart</h2>
+
+        <div class="grid grid-cols-3 gap-6">
+            <!-- Left: Product List -->
+            <div class="col-span-2 bg-white p-4 shadow-md rounded-lg">
+                <h3 class="text-xl font-semibold border-b pb-2 mb-4">Your Items</h3>
+                
+                <!-- Product 1 -->
+                <div class="flex items-center justify-between border-b pb-4 mb-4">
+                    <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/05/juicy-cheeseburger.jpg" alt="Product Image" class="w-16 h-16 object-cover rounded">
+                    <div class="flex-1 ml-4">
+                        <p class="text-lg font-medium">Chicken Biryani</p>
+                        <p class="text-gray-600">₹250</p>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-lg mx-2">1</span>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="flex items-center justify-between border-b pb-4 mb-4">
+                    <img src="https://via.placeholder.com/60" alt="Product Image" class="w-16 h-16 object-cover rounded">
+                    <div class="flex-1 ml-4">
+                        <p class="text-lg font-medium">Paneer Butter Masala</p>
+                        <p class="text-gray-600">₹180</p>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-lg mx-2">2</span>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="flex items-center justify-between border-b pb-4 mb-4">
+                    <img src="https://via.placeholder.com/60" alt="Product Image" class="w-16 h-16 object-cover rounded">
+                    <div class="flex-1 ml-4">
+                        <p class="text-lg font-medium">Garlic Naan</p>
+                        <p class="text-gray-600">₹50</p>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-lg mx-2">3</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right: Price Calculation -->
+            <div class="bg-white p-4 shadow-md rounded-lg">
+                <h3 class="text-xl font-semibold border-b pb-2 mb-4">Price Details</h3>
+
+                <div class="flex justify-between mb-2">
+                    <span>Chicken Biryani</span>
+                    <span>₹250</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span>Paneer Butter Masala (x2)</span>
+                    <span>₹360</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span>Garlic Naan (x3)</span>
+                    <span>₹150</span>
+                </div>
+                <hr class="my-2">
+                <div class="flex justify-between font-bold text-lg">
+                    <span>Total</span>
+                    <span>₹760</span>
+                </div>
+
+                <button class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+{% include 'user_commans/footer.html' %}
