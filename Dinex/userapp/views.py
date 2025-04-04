@@ -30,13 +30,24 @@ def add_to_cart(request,product_id):
             cart_items.quantity +=1
             cart_items.save()
             
-    return redirect("user_cart")
+    return redirect("user_home")
 
 
 def delete_from_cart(request,cart_item_id):
     cart_items = Cart.objects.filter(id = cart_item_id).first()
     if cart_items:
       cart_items.delete()
+    return redirect("user_cart")
+
+def buy_now(request,product_id):
+    product = Product.objects.filter(id = product_id).first()
+    if product:
+        cart_items, created = Cart.objects.get_or_create(product = product)
+
+        if not created:
+            cart_items.quantity +=1
+            cart_items.save()
+
     return redirect("user_cart")
 
 
