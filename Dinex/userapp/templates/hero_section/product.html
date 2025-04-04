@@ -14,83 +14,30 @@
         <!-- Product Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             
+
+            {% for product in product_data%}
             <!-- Product Card -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/06/burger-with-melted-cheese.jpg" alt="Product Image" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <h2 class="text-xl font-semibold">Product Name</h2>
-                    <p class="text-gray-500 text-sm">Category: Electronics</p>
-                    <p class="text-lg font-bold text-green-600 mt-2">₹ 999</p>
-                    <div class="mt-4 flex justify-between">
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Buy Now</button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Duplicate this for multiple products -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/05/juicy-cheeseburger.jpg" alt="Product Image" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <h2 class="text-xl font-semibold">Product Name</h2>
-                    <p class="text-gray-500 text-sm">Category: Fashion</p>
-                    <p class="text-lg font-bold text-green-600 mt-2">₹ 699</p>
-                    <div class="mt-4 flex justify-between">
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Buy Now</button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- More cards can be added here -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/06/pouring-honey-on-pancakes.jpg" alt="Product Image" class="w-full h-40 object-cover">
+                <img src="{{ product.product_image.url }}" alt="{{ product.prod_name }}" class="w-full h-40 object-cover">
                 <div class="p-4">
-                    <h2 class="text-xl font-semibold">Product Name</h2>
-                    <p class="text-gray-500 text-sm">Category: Fashion</p>
-                    <p class="text-lg font-bold text-green-600 mt-2">₹ 299</p>
+                    <h2 class="text-xl font-semibold"> {{product.prod_name}} </h2>
+                    <p class="text-gray-500 text-sm"> {{product.category.category_name}}</p>
+                    <p class="text-gray-500 text-sm"> {{product.sub_category.sub_category_name}}</p>
+                    <p class="text-lg font-bold text-green-600 mt-2">{{product.price}}</p>
                     <div class="mt-4 flex justify-between">
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Buy Now</button>
+                        
+                        <a href="{% url 'add_to_cart' product.id %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</a> 
+                        <a href = "#" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Buy Now</a>
                     </div>
                 </div>
+
             </div>
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/10/coffee-book.jpg" alt="Product Image" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <h2 class="text-xl font-semibold">Product Name</h2>
-                    <p class="text-gray-500 text-sm">Category: Fashion</p>
-                    <p class="text-lg font-bold text-green-600 mt-2">₹ 89</p>
-                    <div class="mt-4 flex justify-between">
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="https://www.foodiesfeed.com/wp-content/uploads/2024/01/best-burger-in-town.jpg" alt="Product Image" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <h2 class="text-xl font-semibold">Product Name</h2>
-                    <p class="text-gray-500 text-sm">Category: Fashion</p>
-                    <p class="text-lg font-bold text-green-600 mt-2">₹ 149</p>
-                    <div class="mt-4 flex justify-between">
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/08/sushi-roll-macro.jpg" alt="Product Image" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <h2 class="text-xl font-semibold">Product Name</h2>
-                    <p class="text-gray-500 text-sm">Category: Fashion</p>
-                    <p class="text-lg font-bold text-green-600 mt-2">₹ 99</p>
-                    <div class="mt-4 flex justify-between">
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Buy Now</button>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
+
+
+           
             
         </div>
     </div>

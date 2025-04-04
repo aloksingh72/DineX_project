@@ -247,6 +247,7 @@ def create_product(request):
         product_name = request.POST.get("product_name")
         price = request.POST.get("price")
         description = request.POST.get("description")
+        product_image = request.FILES.get("product_image")  
 
         # Validate category selection
         if category_id and sub_category_id:
@@ -260,6 +261,7 @@ def create_product(request):
                 prod_name=product_name,
                 price=price,
                 description=description,
+                product_image=product_image,
             )
             return redirect("products")  # Redirect after successful save
   
@@ -281,6 +283,7 @@ def edit_product(request,product_id):
         product.description = request.POST.get("product_description")
         category_id = request.POST.get("category")
         sub_category_id = request.POST.get("sub_category")
+       
 
         # Update category and subcategory if selected
         if category_id:
@@ -293,7 +296,7 @@ def edit_product(request,product_id):
             try:
                 product.sub_category = SubCategory.objects.get(id=sub_category_id)
             except SubCategory.DoesNotExist:
-                pass  # Ignore if invalid sub-category is provided
+                pass  
 
             product.save()
             return redirect("products")

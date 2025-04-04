@@ -20,63 +20,40 @@
                 <h3 class="text-xl font-semibold border-b pb-2 mb-4">Your Items</h3>
                 
                 <!-- Product 1 -->
+            
+                {% for cart_data in cart_items%}
                 <div class="flex items-center justify-between border-b pb-4 mb-4">
-                    <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/05/juicy-cheeseburger.jpg" alt="Product Image" class="w-16 h-16 object-cover rounded">
+                    <img src="{{cart_data.product.product_image.url}}" alt="Product Image" class="w-16 h-16 object-cover rounded">
                     <div class="flex-1 ml-4">
-                        <p class="text-lg font-medium">Chicken Biryani</p>
-                        <p class="text-gray-600">₹250</p>
+                        <p class="text-lg font-medium">{{cart_data.product.prod_name}}</p>
+                        <p class="text-gray-600">{{cart_data.product.price}}</p>
                     </div>
                     <div class="flex items-center">
-                        <span class="text-lg mx-2">1</span>
+                        Quantity:
+                        <span class="text-lg mx-2">{{cart_data.quantity}}</span>
+                        <a href="#" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Remove</a>
                     </div>
                 </div>
+                {% endfor %}
+               
 
-                <!-- Product 2 -->
-                <div class="flex items-center justify-between border-b pb-4 mb-4">
-                    <img src="https://via.placeholder.com/60" alt="Product Image" class="w-16 h-16 object-cover rounded">
-                    <div class="flex-1 ml-4">
-                        <p class="text-lg font-medium">Paneer Butter Masala</p>
-                        <p class="text-gray-600">₹180</p>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-lg mx-2">2</span>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="flex items-center justify-between border-b pb-4 mb-4">
-                    <img src="https://via.placeholder.com/60" alt="Product Image" class="w-16 h-16 object-cover rounded">
-                    <div class="flex-1 ml-4">
-                        <p class="text-lg font-medium">Garlic Naan</p>
-                        <p class="text-gray-600">₹50</p>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-lg mx-2">3</span>
-                    </div>
-                </div>
-
+                
+                
             </div>
 
             <!-- Right: Price Calculation -->
             <div class="bg-white p-4 shadow-md rounded-lg">
                 <h3 class="text-xl font-semibold border-b pb-2 mb-4">Price Details</h3>
-
+               {% for cart_data in cart_items%}
                 <div class="flex justify-between mb-2">
-                    <span>Chicken Biryani</span>
-                    <span>₹250</span>
+                    <span>{{cart_data.product.prod_name}} (x{{cart_data.quantity}})</span>
+                    <span>₹{{cart_data.product.price| floatformat:2 }} </span>  
                 </div>
-                <div class="flex justify-between mb-2">
-                    <span>Paneer Butter Masala (x2)</span>
-                    <span>₹360</span>
-                </div>
-                <div class="flex justify-between mb-2">
-                    <span>Garlic Naan (x3)</span>
-                    <span>₹150</span>
-                </div>
+                {% endfor %}
                 <hr class="my-2">
                 <div class="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span>₹760</span>
+                    <span>₹ 1020 </span>
                 </div>
 
                 <button class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">Checkout</button>
