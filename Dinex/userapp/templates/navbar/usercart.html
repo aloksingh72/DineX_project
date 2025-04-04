@@ -3,12 +3,14 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DineX Cart</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100">
 
     <div class="container mx-auto p-6">
@@ -18,12 +20,13 @@
             <!-- Left: Product List -->
             <div class="col-span-2 bg-white p-4 shadow-md rounded-lg">
                 <h3 class="text-xl font-semibold border-b pb-2 mb-4">Your Items</h3>
-                
+
                 <!-- Product 1 -->
-            
+                {%if cart_items%}
                 {% for cart_data in cart_items%}
                 <div class="flex items-center justify-between border-b pb-4 mb-4">
-                    <img src="{{cart_data.product.product_image.url}}" alt="Product Image" class="w-16 h-16 object-cover rounded">
+                    <img src="{{cart_data.product.product_image.url}}" alt="Product Image"
+                        class="w-16 h-16 object-cover rounded">
                     <div class="flex-1 ml-4">
                         <p class="text-lg font-medium">{{cart_data.product.prod_name}}</p>
                         <p class="text-gray-600">{{cart_data.product.price}}</p>
@@ -31,29 +34,36 @@
                     <div class="flex items-center">
                         Quantity:
                         <span class="text-lg mx-2">{{cart_data.quantity}}</span>
-                        <a href="#" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Remove</a>
+                        <a href="{% if cart_data.id %}{% url 'delete_from_cart' cart_data.id %}{% else %}#{% endif %}"
+                            class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Remove</a>
                     </div>
                 </div>
                 {% endfor %}
-               
+                {% else %}
+                <p class="text-gray-600">Your Cart is Empty</p>
+                {%endif%}
 
-                
-                
+
+
+
             </div>
 
             <!-- Right: Price Calculation -->
             <div class="bg-white p-4 shadow-md rounded-lg">
                 <h3 class="text-xl font-semibold border-b pb-2 mb-4">Price Details</h3>
-               {% for cart_data in cart_items%}
+
+
+                {% for cart_data in cart_items%}
                 <div class="flex justify-between mb-2">
                     <span>{{cart_data.product.prod_name}} (x{{cart_data.quantity}})</span>
-                    <span>₹{{cart_data.product.price| floatformat:2 }} </span>  
+                    <span>₹{{cart_data.product.price| floatformat:2 }} </span>
                 </div>
                 {% endfor %}
+
                 <hr class="my-2">
                 <div class="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span>₹ 1020 </span>
+                    <span>₹ {{total_price |floatformat:2 }} </span>
                 </div>
 
                 <button class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">Checkout</button>
@@ -62,6 +72,7 @@
     </div>
 
 </body>
+
 </html>
 
 

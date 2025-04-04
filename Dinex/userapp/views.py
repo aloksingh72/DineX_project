@@ -30,8 +30,14 @@ def add_to_cart(request,product_id):
             cart_items.quantity +=1
             cart_items.save()
             
-    return redirect(user_cart)
+    return redirect("user_cart")
 
+
+def delete_from_cart(request,cart_item_id):
+    cart_items = Cart.objects.filter(id = cart_item_id).first()
+    if cart_items:
+      cart_items.delete()
+    return redirect("user_cart")
 
 
 
