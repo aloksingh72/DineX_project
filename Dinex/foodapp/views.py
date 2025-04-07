@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout,login
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+
 # Create your views here.
 def home(request):
     return render(request,"home.html")
@@ -36,6 +37,35 @@ def admin_login(request):
     return render(request,"admin_login.html")
 
 
+def admin_signup(request):
+    if request.method == "POST":
+     username = request.POST["username"]
+     email = request.POST["email"]
+     password = request.POST["password"]
+     confirm_password = request.POST["confirm_password"]
+
+     if  password != confirm_password:
+        messages.error(request,"Passwords does not match")
+        return redirect("admin_signup")
+    
+     if UserDetails.objects.filter(email = email).exists():
+        messages.error(request,"Email is already exists")
+        return redirect("admin_signup")
+    
+     if UserDetails.objects.filter(username = username).exists():
+      messages.error(request,"username is already exists")
+      return redirect("admin_signup")
+    #  hashing password 
+     hashed_password = make_password(password)
+
+     admin = UserDetails(username = username,email = email,password = hashed_password)
+     admin.save()
+     messages.success(request,"Admin registered successfully")
+     return redirect("admin_login")
+    
+    return render(request,"admin_signup.html")
+
+
 def admin_dashboard(request):
    
    category_count = Category.objects.count()
@@ -45,6 +75,11 @@ def admin_dashboard(request):
    return render(request,"index.html",context={"category_count":category_count,
                                                "sub_category_count":sub_category_count,
                                                "product_count":product_count})
+
+
+def user_login(request):
+
+    return render(request,"user_login.html")
 
 
 # view for show the listing of the category
@@ -146,33 +181,6 @@ def delete_sub_categories(request,subcategory_id):
     
     
 
-def admin_signup(request):
-    if request.method == "POST":
-     username = request.POST["username"]
-     email = request.POST["email"]
-     password = request.POST["password"]
-     confirm_password = request.POST["confirm_password"]
-
-     if  password != confirm_password:
-        messages.error(request,"Passwords does not match")
-        return redirect("admin_signup")
-    
-     if UserDetails.objects.filter(email = email).exists():
-        messages.error(request,"Email is already exists")
-        return redirect("admin_signup")
-    
-     if UserDetails.objects.filter(username = username).exists():
-      messages.error(request,"username is already exists")
-      return redirect("admin_signup")
-    #  hashing password 
-     hashed_password = make_password(password)
-
-     admin = UserDetails(username = username,email = email,password = hashed_password)
-     admin.save()
-     messages.success(request,"Admin registered successfully")
-     return redirect("admin_login")
-    
-    return render(request,"admin_signup.html")
 
 # --------------------------------views for products----------------------------------
 def product_list(request):
@@ -227,9 +235,6 @@ def load_subcategories(request):
     category_id = request.GET.get('category_id')
     subcategories = SubCategory.objects.filter(category_id=category_id).values('id', 'sub_category_name')
     return JsonResponse(list(subcategories), safe=False)
-
-
-
 
 def create_product(request):
     
@@ -304,18 +309,10 @@ def edit_product(request,product_id):
     return render(request,"product/editproduct.html",
                   context={"product":product,"categories":categories,"sub_categories":sub_categories})
 
-
 def delete_product(request,product_id):
     product_instance = Product.objects.filter(id=product_id).last()
     product_instance.delete()
     return redirect("products")
-
-
-def user_login(request):
-
-    return render(request,"user_login.html")
-
-from django.http import JsonResponse
 
 def get_data(request):
     if request.method == "GET":
@@ -328,5 +325,5 @@ def get_data(request):
 
 
 def show_analytics(request):
-
     return render(request,"analytics.html")
+
