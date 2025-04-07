@@ -16,7 +16,9 @@ def user_home(request):
 
 # cart view
 def user_cart(request):
-    cart_items = Cart.objects.all()
+    current_user = request.user
+    cart_items = Cart.objects.filter(user= current_user)
+    # cart_items = Cart.objects.all()
     total_price = cart_items.aggregate(total=Sum(F('product__price') * F('quantity')))['total'] or 0
 
     return render(request,"navbar/usercart.html",context= {"cart_items":cart_items,"total_price":total_price})
@@ -24,7 +26,7 @@ def user_cart(request):
 def add_to_cart(request,product_id):
     product = Product.objects.filter(id = product_id).first()
     if product:
-        cart_items, created = Cart.objects.get_or_create(product = product)
+        cart_items, created = Cart.objects.get_or_create(product = product,user = request.user)
 
         if not created:
             cart_items.quantity +=1

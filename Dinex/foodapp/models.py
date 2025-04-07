@@ -3,22 +3,27 @@ from foodapp.manager import *
 from django.contrib.auth.models import AbstractBaseUser
 # Create your models here.
 class UserDetails(AbstractBaseUser):
+    ROLE_CHOICES = (
+         ('admin', 'Admin'),
+        ('user', 'User'),
+           )
     username = models.CharField(max_length =100,unique = True)
     email= models.EmailField(max_length =100,unique =True)
     password = models.CharField(max_length=100)
     confirm_password= models.CharField(max_length =100)
     created_on = models.DateTimeField(auto_now_add = True)
    
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
+   
     is_active =models.BooleanField(default = True)
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []  # add any required fields besides email
-
+    def __str__(self):
+        return self.email
     class Meta:
         db_table = "user_details"
-
-
 
 
 
@@ -56,7 +61,10 @@ class Product(models.Model):
 class Cart(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    
+    user = models.ForeignKey(UserDetails,on_delete=models.CASCADE,default=1)
 
     def __str__(self):
         return f"{self.product.name} - {self.quantity}"
+    
+    class Meta:
+        unique_together = ('user', 'product')

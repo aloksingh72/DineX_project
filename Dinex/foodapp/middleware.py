@@ -7,13 +7,23 @@ class LogoutMiddleware(MiddlewareMixin):
         # Bypass for static/media files
         if request.path.startswith("/static/") or request.path.startswith("/media/"):
             return None  
+        
+
+        public_paths = [
+
+            "/",
+            "/admin_login/",
+            "/admin_signup/",
+            "/user_login/",
+            "/user_signup/",
+        ]
 
         # Exclude the admin login page to prevent infinite loop
-        if request.path == "/admin-login/":
-            return None  
+        if request.path in public_paths:
+            return None
 
         # Redirect only if user is not authenticated and trying to access protected pages
         if not request.user.is_authenticated:
-            return redirect("/admin-login/")  # Redirect to login page
+            return redirect("/")  # Redirect to login page
 
         return None  # Continue processing other requests

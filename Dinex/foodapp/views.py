@@ -22,48 +22,84 @@ def admin_logout(request):
 
 def admin_login(request):
     if request.method == "POST":
-       email = request.POST["email"]
-       password = request.POST["password"]
-       
-    #    admin_instance = authenticate(request,email = email,password = password)
-       admin_instance = UserDetails.objects.get(email= email)
-       if check_password(password,admin_instance.password):
-                    login(request, admin_instance)
-                    print("user_login=============>")
-                    request.session["admin_id"] = admin_instance.id
-                    messages.success(request,"Admin login succesful")
-                    return redirect("admin_dashboard")
+        email = request.POST["email"]
+        password = request.POST["password"]
+        
+        #    admin_instance = authenticate(request,email = email,password = password)
+        admin_instance = UserDetails.objects.get(email= email)
+
+        if admin_instance.role == "admin":
+            if check_password(password,admin_instance.password):
+                        login(request, admin_instance)
+                        print("admin_login=============>")
+                        request.session["admin_id"] = admin_instance.id
+                        messages.success(request,"Admin login succesful")
+                        return redirect("admin_dashboard")
+            else:
+                messages.error(request,"Not an  Admin account")
+                return redirect("admin_login")
        
     return render(request,"admin_login.html")
 
 
+# def admin_signup(request):
+#     if request.method == "POST":
+#      username = request.POST["username"]
+#      email = request.POST["email"]
+#      password = request.POST["password"]
+#      confirm_password = request.POST["confirm_password"]
+
+#      if  password != confirm_password:
+#         messages.error(request,"Passwords does not match")
+#         return redirect("admin_signup")
+    
+#      if UserDetails.objects.filter(email = email).exists():
+#         messages.error(request,"Email is already exists")
+#         return redirect("admin_signup")
+    
+#      if UserDetails.objects.filter(username = username).exists():
+#       messages.error(request,"username is already exists")
+#       return redirect("admin_signup")
+#     #  hashing password 
+#      hashed_password = make_password(password)
+
+#      admin = UserDetails(username = username,email = email,password = hashed_password)
+#      admin.save()
+#      messages.success(request,"Admin registered successfully")
+#      return redirect("admin_login")
+    
+#     return render(request,"admin_signup.html")
+
 def admin_signup(request):
     if request.method == "POST":
-     username = request.POST["username"]
-     email = request.POST["email"]
-     password = request.POST["password"]
-     confirm_password = request.POST["confirm_password"]
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
 
-     if  password != confirm_password:
-        messages.error(request,"Passwords does not match")
-        return redirect("admin_signup")
-    
-     if UserDetails.objects.filter(email = email).exists():
-        messages.error(request,"Email is already exists")
-        return redirect("admin_signup")
-    
-     if UserDetails.objects.filter(username = username).exists():
-      messages.error(request,"username is already exists")
-      return redirect("admin_signup")
-    #  hashing password 
-     hashed_password = make_password(password)
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return redirect('admin_signup')
+        
+        if UserDetails.objects.filter(username = username).exists():
+            messages.error(request,"username is already exists")
+            return redirect("admin_signup")
 
-     admin = UserDetails(username = username,email = email,password = hashed_password)
-     admin.save()
-     messages.success(request,"Admin registered successfully")
-     return redirect("admin_login")
-    
-    return render(request,"admin_signup.html")
+        if UserDetails.objects.filter(email=email).exists():
+            messages.error(request, "Email already registered.")
+            return redirect('admin_signup')
+
+        UserDetails.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            confirm_password=confirm_password,
+            role="admin"
+        )
+        messages.success(request, "Admin registered successfully.")
+        return redirect('admin_login')
+
+    return render(request, "userapp/admin_signup.html")
 
 
 def admin_dashboard(request):
@@ -77,9 +113,53 @@ def admin_dashboard(request):
                                                "product_count":product_count})
 
 
-def user_login(request):
+def user_signup(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        confirm_password = request.POST["confirm_password"]
 
+        #  adding the validation
+        if password != confirm_password:
+            messages.error(request,"Passwords do not match")
+            return redirect("user_signup")
+        if UserDetails.objects.filter(email=email).exists():
+            messages.error(request,"Email is already registered")
+            return redirect("user_signup")
+        
+        UserDetails.objects.create_user(
+            username = username,
+            email = email,
+            password = password,
+            confirm_password = confirm_password,
+            role = "user"
+        )
+        messages.success(request,"User registered successfully")
+        return redirect("user_login")
+         
+    return render(request,"user_signup.html")
+
+
+def user_login(request):
+    if request.method =="POST":
+        email = request.POST["email"]
+        password= request.POST["password"]
+
+        user_instance = UserDetails.objects.get(email = email)
+        if user_instance.role =="user":
+            if check_password(password,user_instance.password):
+                 login(request, user_instance)
+                 print("user_login==========>")
+                 request.session["user_id"] = user_instance.id
+                 messages.success(request,"User login successful")
+                 return redirect("/user/home/")
+                    
     return render(request,"user_login.html")
+
+def user_logout(request):
+    logout(request)
+    return redirect('home')
 
 
 # view for show the listing of the category

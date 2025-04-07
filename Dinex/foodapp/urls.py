@@ -10,12 +10,16 @@ urlpatterns = [
     path('admin-signup/',admin_signup,name="admin_signup"),
     path("admin-dashboard/", admin_dashboard, name="admin_dashboard"),
     path('user-login/',user_login,name = "user_login"),
+    path('user-signup/',user_signup,name = "user_signup"),
+    # path('user-dashboard/',user_dashboard,name = "user_dashboard"),
     # userdsignup path---->
     path('categories/',categories_list,name = "categories"),
     path('create-categories/',create_categories,name="create_categories"),
     #path for the edit categories
     path('edit-categories/<int:pk>/',edit_category,name="edit_category"),
     path('delete-category/<int:pk>/',delete_category,name="delete_category"),
+
+
 
     #path for sub-categories
     path('sub-category/',sub_category_list,name="sub_category_list"),
