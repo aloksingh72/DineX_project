@@ -407,3 +407,4 @@ def get_data(request):
 def show_analytics(request):
     return render(request,"analytics.html")
 
+  

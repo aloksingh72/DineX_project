@@ -22,7 +22,7 @@ def user_cart(request):
     total_price = cart_items.aggregate(total=Sum(F('product__price') * F('quantity')))['total'] or 0
 
     return render(request,"navbar/usercart.html",context= {"cart_items":cart_items,"total_price":total_price})
-
+# views to add in the cart 
 def add_to_cart(request,product_id):
     product = Product.objects.filter(id = product_id).first()
     if product:
