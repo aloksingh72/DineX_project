@@ -57,7 +57,7 @@ class Product(models.Model):
         return self.prod_name
 
 
-
+#cart models
 class Cart(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
