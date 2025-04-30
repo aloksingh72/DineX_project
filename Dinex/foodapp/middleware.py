@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
 from django.contrib.auth import logout
-
+#loggout middleware
 class LogoutMiddleware(MiddlewareMixin):
     def process_request(self, request):
         # Bypass for static/media files
