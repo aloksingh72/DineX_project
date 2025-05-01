@@ -2,6 +2,7 @@ from django.db import models
 from foodapp.manager import *
 from django.contrib.auth.models import AbstractBaseUser
 # Create your models here.
+#userdetails models
 class UserDetails(AbstractBaseUser):
     ROLE_CHOICES = (
          ('admin', 'Admin'),
