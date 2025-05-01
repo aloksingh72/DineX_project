@@ -2,7 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-
+    #url for amdin-Credentials
     path('',home,name = "home"),
     path('admin-login/',admin_login,name="admin_login"),
     path('admin-logout/',admin_logout,name="admin_logout"),
