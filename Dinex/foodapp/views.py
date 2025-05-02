@@ -234,7 +234,7 @@ def create_sub_categories(request):
             return redirect("sub_category_list") 
     return render(request,"subcategory/createsubcategory.html",context={"create_sub_cat":create_sub_cat})
 
-
+#edit sub_categories
 def edit_sub_categories(request,subcategory_id):
       edit_subcategory = SubCategory.objects.get(id=subcategory_id)
       categories = Category.objects.all()
@@ -254,6 +254,7 @@ def edit_sub_categories(request,subcategory_id):
       return render(request,"subcategory/editsubcategory.html",
                     context={"edit_subcategory":edit_subcategory,"categories":categories})
 
+# delete sub_categories
 def delete_sub_categories(request,subcategory_id):
     sub_category_instance = SubCategory.objects.filter(id = subcategory_id).last()
     sub_category_instance.delete()
