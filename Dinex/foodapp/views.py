@@ -219,7 +219,7 @@ def sub_category_list(request):
  
     return render(request, "subcategory/index.html", {"subcategories": subcategories})
 
-
+#create_sub_categories
 def create_sub_categories(request):
     create_sub_cat = Category.objects.all().order_by("id")
     if request.method == "POST":
