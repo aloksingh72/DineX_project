@@ -317,6 +317,7 @@ def load_subcategories(request):
     subcategories = SubCategory.objects.filter(category_id=category_id).values('id', 'sub_category_name')
     return JsonResponse(list(subcategories), safe=False)
 
+# create product 
 def create_product(request):
     
     categories = Category.objects.all()
