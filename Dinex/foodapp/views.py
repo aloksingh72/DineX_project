@@ -311,7 +311,7 @@ def product_list(request):
 #                            "sub_categories":sub_categories,
 #                            "selected_categories_id":selected_categories_id,})
 
-
+#load categories
 def load_subcategories(request):
     category_id = request.GET.get('category_id')
     subcategories = SubCategory.objects.filter(category_id=category_id).values('id', 'sub_category_name')
