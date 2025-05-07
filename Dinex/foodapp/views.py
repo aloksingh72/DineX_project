@@ -358,6 +358,7 @@ def create_product(request):
         "selected_category_id": selected_category_id,
     })
 
+#edit_product viwes
 def edit_product(request,product_id):
     product = Product.objects.get(id=product_id) 
     
